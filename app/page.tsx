@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import React from "react";
 
 const Home = () => {
@@ -12,6 +13,7 @@ const Home = () => {
                 nam, laborum omnis! Ut in quaerat amet quo aspernatur sint
                 voluptate nemo, cumque sunt nobis?
             </p>
+            <Button variant="default" size="lg">Checkout</Button>
         </div>
     );
 };
