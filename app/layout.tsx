@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -27,7 +29,11 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" className={cn("font-sans", inter.variable)}>
-            <body className="font-poppins antialiased">{children}</body>
+            <body className="font-poppins antialiased">
+                <Header />
+                {children}
+                <Footer />
+            </body>
         </html>
     );
 }
