@@ -19,6 +19,7 @@
     --color-dark-color: #151515;
     --color-light-color: #52525b;
     --color-light-orange: #fca99b;
+    --color-shop_light_green: #3b9c3c;
 
     /* --color-light-blue: #7688db;
     --color-dark-blue: #6c7fd8;
@@ -147,13 +148,19 @@
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+    * {
+        @apply border-border outline-ring/50;
     }
-  body {
-    @apply bg-background text-foreground;
+    body {
+        @apply bg-background text-foreground;
     }
-  html {
-    @apply font-sans;
+    html {
+        @apply font-sans;
+    }
+    .hoverEffect {
+        @apply transition-all duration-300 ease-in-out;
+    }
+    button {
+        @apply hover:cursor-pointer;
     }
 }
