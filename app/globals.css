@@ -12,7 +12,6 @@
     --color-shop-light-pink: #fcf0e4;
     --color-shop-dark-green: #063c28;
     --color-shop-btn-dark-green: #063d29;
-    --color-shop-light-green: #3b9c3c;
     --color-shop-orange: #fb6c08;
 
     /* UI Colors */
@@ -20,20 +19,13 @@
     --color-light-color: #52525b;
     --color-light-orange: #fca99b;
     --color-shop_light_green: #3b9c3c;
-
-    /* --color-light-blue: #7688db;
-    --color-dark-blue: #6c7fd8;
-    --color-dark-text: #686e7d;
-    --color-light-bg: #f8f8fb;
-    --color-dark-red: #f02757;
-
-    --color-gray-soft: #ababab;
-    --color-green-soft: #93d991;
-    --color-blue-soft: #f1f3f8;
-    --color-white-soft: #f6f6f6;
-    --color-light-text: #71717a;
-    --color-light-green: #dcfce7;
-    --color-product-bg: #ffffff; */
+    --color-shop-lighter-green: #93d991;
+    --color-dark_blue: #6c7fd8;
+    --color-shop-lighter-bg: #f1f3f8;
+    --color-shop-light_bg: #f6f6f6;
+    --color-shop-light-text: #686e7d;
+    --color-shop-lighter-text: #ababab;
+    --color-deal-bg: #f1f3f8;
 }
 
 :root {

@@ -11,7 +11,6 @@ import { ClerkLoaded, Show, UserButton } from "@clerk/nextjs";
 
 const Header = async () => {
     const user = await currentUser();
-    console.log(user);
 
     return (
         <header className="bg-white py-6">
