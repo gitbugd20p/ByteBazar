@@ -13,7 +13,7 @@ const Header = async () => {
     const user = await currentUser();
 
     return (
-        <header className="bg-white py-6">
+        <header className="bg-white/70 py-5 sticky top-0 z-50 backdrop-blur-md">
             <Container className="flex items-center justify-between text-light-color">
                 <div className="w-auto md:w-1/3 flex items-center gap-2.5 md:gap-0 justify-start ">
                     <MobileMenu />
