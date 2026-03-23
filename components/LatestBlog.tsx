@@ -8,7 +8,6 @@ import dayjs from "./../node_modules/dayjs/esm/index";
 
 const LatestBlog = async () => {
     const blogs = await getLatestBlogs();
-    console.log("blogs", blogs);
     return (
         <div className="mb-10 lg:mb-20">
             <Title>Latest Blog</Title>
