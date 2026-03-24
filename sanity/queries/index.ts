@@ -1,5 +1,11 @@
 import { sanityFetch } from "../lib/live";
-import { BRANDS_QUERY, DEAL_PRODUCTS, LATEST_BLOG_QUERY } from "./query";
+import {
+    BRAND_QUERY,
+    BRANDS_QUERY,
+    DEAL_PRODUCTS,
+    LATEST_BLOG_QUERY,
+    PRODUCT_BY_SLUG_QUERY,
+} from "./query";
 
 const getCategories = async (quantity?: number) => {
     try {
@@ -55,4 +61,43 @@ const getDealProducts = async () => {
     }
 };
 
-export { getCategories, getAllBrands, getLatestBlogs, getDealProducts };
+const getProductBySlug = async (slug: string) => {
+    try {
+        const product = await sanityFetch({
+            query: PRODUCT_BY_SLUG_QUERY,
+            params: {
+                slug,
+            },
+        });
+
+        return product?.data || null;
+    } catch (error) {
+        console.error("Error fetching product by slug:", error);
+        return null;
+    }
+};
+
+const getBrand = async (slug: string) => {
+    try {
+        const product = await sanityFetch({
+            query: BRAND_QUERY,
+            params: {
+                slug,
+            },
+        });
+
+        return product?.data || null;
+    } catch (error) {
+        console.error("Error fetching product by brand:", error);
+        return null;
+    }
+};
+
+export {
+    getCategories,
+    getAllBrands,
+    getLatestBlogs,
+    getDealProducts,
+    getProductBySlug,
+    getBrand,
+};

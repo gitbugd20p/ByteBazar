@@ -6,7 +6,7 @@ import { ShoppingBag } from "lucide-react";
 import { Button } from "./ui/button";
 
 interface Props {
-    product: Product;
+    product: Product | null | undefined;
     className?: string;
 }
 
