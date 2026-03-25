@@ -6,7 +6,11 @@ import CategoryList from "./shop/CategoryList";
 import BrandList from "./shop/BrandList";
 import PriceList from "./shop/PriceList";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { client } from "@/sanity/lib/client";
+import { Loader2 } from "lucide-react";
+import NoProductAvailable from "./NoProductAvailable";
+import ProductCard from "./ProductCard";
 
 interface Props {
     categories: Category[];
@@ -25,6 +29,52 @@ const Shop = ({ categories, brands }: Props) => {
         brandParams || null,
     );
     const [selectedPrice, setSelectedPrice] = useState<string | null>(null);
+
+    const fetchProducts = async () => {
+        setLoading(true);
+        try {
+            let minPrice = 0;
+            let maxPrice = 10000;
+
+            if (selectedPrice) {
+                const [min, max] = selectedPrice.split("-").map(Number);
+                minPrice = min;
+                maxPrice = max;
+            }
+
+            const query = `
+      *[_type == 'product' 
+        && (!defined($selectedCategory) || references(*[_type == "category" && slug.current == $selectedCategory]._id))
+        && (!defined($selectedBrand) || references(*[_type == "brand" && slug.current == $selectedBrand]._id))
+        && price >= $minPrice && price <= $maxPrice
+      ] 
+      | order(name asc) {
+        ...,"categories": categories[]->title
+      }
+    `;
+            const data = await client.fetch(
+                query,
+                {
+                    selectedCategory: selectedCategory ?? null,
+                    selectedBrand: selectedBrands ?? null, // Map plural state to singular query param
+                    minPrice,
+                    maxPrice,
+                },
+                { next: { revalidate: 0 } },
+            );
+
+            setProducts(data || []);
+        } catch (error) {
+            console.log("Shop product fetching Error:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchProducts();
+    }, [selectedCategory, selectedBrands, selectedPrice]);
+
     return (
         <div className="border-t">
             <Container className="mt-5">
@@ -69,8 +119,29 @@ const Shop = ({ categories, brands }: Props) => {
                             setSelectedPrice={setSelectedPrice}
                         />
                     </div>
+
                     {/* Products */}
-                    <div>Products</div>
+                    <div className="flex-1 pt-5">
+                        <div className="h-[calc(100vh-160px)] overflow-y-auto pr-2 scrollbar-hide">
+                            {loading ? (
+                                <div className="p-20 flex flex-col gap-2 items-center justify-center bg-white">
+                                    <Loader2 className="w-10 h-10 text-shop-dark-green animate-spin" />
+                                    <p>Product is loading...</p>
+                                </div>
+                            ) : products?.length > 0 ? (
+                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5">
+                                    {products?.map((product) => (
+                                        <ProductCard
+                                            key={product?._id}
+                                            product={product}
+                                        />
+                                    ))}
+                                </div>
+                            ) : (
+                                <NoProductAvailable className="bg-white mt-0" />
+                            )}
+                        </div>
+                    </div>
                 </div>
             </Container>
         </div>
