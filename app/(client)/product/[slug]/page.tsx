@@ -61,7 +61,7 @@ const SingleProductsPage = async ({
 
                 {/* add to cart */}
                 <div className="flex items-center gap-2.5 lg:gap-5">
-                    <AddToCartButton product={product} />
+                    {product && <AddToCartButton product={product} />}
                     <FavoriteButton showProduct={true} product={product} />
                 </div>
 
