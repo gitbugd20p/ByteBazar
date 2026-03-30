@@ -29,6 +29,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { metadata } from "./../layout";
+import { createCheckoutSession, Metadata } from "@/actions/createCheckoutSession";
 
 const CartPage = () => {
     const {
@@ -68,7 +70,32 @@ const CartPage = () => {
         }
     };
 
-    const handleCheckout = () => {};
+    const handleCheckout = async () => {
+        setLoading(true);
+        try {
+            const metadata: Metadata = {
+                orderNumber: crypto.randomUUID(),
+                customerName: user?.fullName ?? "Unknown",
+                customerEmail:
+                    user?.emailAddresses[0]?.emailAddress ?? "Unknown",
+                clerkUserId: user?.id,
+                address: selectedAddress,
+            };
+            
+            const checkoutUrl = await createCheckoutSession(
+                groupedItems,
+                metadata,
+            );
+            console.log(checkoutUrl);
+            // if (checkoutUrl) {
+            //     window.location.href = checkoutUrl;
+            // }
+        } catch (error) {
+            console.error("Error creating checkout session:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
         fetchAddresses();
