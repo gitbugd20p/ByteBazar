@@ -18,7 +18,6 @@ const Header = async () => {
     let orders = null;
     if (userId) {
         orders = await getMyOrders(userId);
-        console.log(orders);
     }
 
     return (
