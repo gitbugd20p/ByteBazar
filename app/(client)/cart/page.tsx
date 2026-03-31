@@ -29,8 +29,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { metadata } from "./../layout";
-import { createCheckoutSession, Metadata } from "@/actions/createCheckoutSession";
+
+import {
+    createCheckoutSession,
+    Metadata,
+} from "@/actions/createCheckoutSession";
 
 const CartPage = () => {
     const {
@@ -41,7 +44,6 @@ const CartPage = () => {
         resetCart,
     } = useStore();
 
-    const [isClient, setIsClient] = useState(false);
     const [loading, setLoading] = useState(false);
     const groupedItems = useStore((state) => state.getGroupedItems());
     const { isSignedIn } = useAuth();
@@ -81,12 +83,12 @@ const CartPage = () => {
                 clerkUserId: user?.id,
                 address: selectedAddress,
             };
-            
+
             const checkoutUrl = await createCheckoutSession(
                 groupedItems,
                 metadata,
             );
-            
+
             if (checkoutUrl) {
                 window.location.href = checkoutUrl;
             }
